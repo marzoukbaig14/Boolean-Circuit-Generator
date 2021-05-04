@@ -161,6 +161,29 @@ Gate* new_OrGate() {
 	return this;
 }
 
+// 
+// NandGate
+//
+
+static void NandGate_update(Gate *this) {
+	Boolean_setValue(this->output, ((Boolean_getValue(this->inputs[0]) && !Boolean_getValue(this->inputs[1]))
+								|| (!Boolean_getValue(this->inputs[0]) && Boolean_getValue(this->inputs[1])))
+								|| (!Boolean_getValue(this->inputs[0]) && !Boolean_getValue(this->inputs[1])));
+}
+
+static void NandGate_print(Gate *this) {
+	BinaryGate_print(this, "NAND");
+}
+
+Gate* new_NandGate() {
+	Gate* this = new_BinaryGate();
+	this->inputs[0] = new_Boolean(false);
+	this->inputs[1] = new_Boolean(false);
+	this->update = NandGate_update;
+	this->print = NandGate_print;
+	return this;
+}
+
 //
 // And3Gate
 //
